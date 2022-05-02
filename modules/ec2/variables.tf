@@ -9,3 +9,7 @@ variable "subnet_id" {
 
 variable "sg_id" {
 }
+
+variable "private_key" {
+   default = "/root/.ssh/testKP.pem"
+}

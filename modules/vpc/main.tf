@@ -13,14 +13,32 @@ provider "aws" {
   region  = "ap-south-1"
 }
 
-
 resource "aws_vpc" "testVPC" {
   cidr_block   = "10.0.0.0/16"
   instance_tenancy = "default"
-
+  enable_dns_hostnames = true
   tags = {
     Name = var.vpc_name
   }
 }
 
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.testVPC.id
 
+  tags = {
+    Name = "testigw"
+  }
+}
+
+resource "aws_route_table" "igw_route" {
+  vpc_id = aws_vpc.testVPC.id
+
+  route {
+    cidr_block = "10.0.0.0/16"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+  tags = {
+    Name = "igw_route"
+  }
+}

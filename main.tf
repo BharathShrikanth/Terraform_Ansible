@@ -32,3 +32,4 @@ module "ec2" {
   subnet_id = "${module.subnet.public_subnet_id}"
   sg_id = "${module.sg.sg_id}"
 }
+
