@@ -48,6 +48,23 @@
         src: files/nginx.conf.j2
         dest: /etc/nginx/sites-available/default
       notify: Restart Nginx
+    
+    - name: create ssl folder
+      file:
+        path: /etc/nginx/ssl
+        state: directory
+
+    - name: change permissions of ssl folder
+      command: "chmod 700 /etc/nginx/ssl"
+
+    - name: create self-signed cert
+      command: "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/CN=www.demo.com/O=Test LTD./C=IN' -keyout /etc/nginx/ssl/demo.key -out /etc/nginx/ssl/demo.crt"
+    
+    - name: copy conf file
+      template: 
+        src: files/www.demo.com.j2
+        dest: /etc/nginx/conf.d/www.demo.com.conf
+      notify: Restart Nginx
 
     - name: Enable new site
       file:

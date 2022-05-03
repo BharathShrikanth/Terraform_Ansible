@@ -1,0 +1,18 @@
+server {
+  listen 80 default_server;
+  server_name {{ public_ip }};
+  return 301 https://$server_name$request_uri;
+} 
+
+server {
+  listen 443 ssl;
+  server_name {{ public_ip }};
+  
+  ssl_certificate /etc/nginx/ssl/demo.crt;
+  ssl_certificate_key /etc/nginx/ssl/demo.key;
+
+  location / {
+    root /var/www/demo_site_code;
+    index index.html index.htm;
+  }
+} 

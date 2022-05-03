@@ -38,7 +38,7 @@ resource "aws_instance" "app_server" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ec2-user -i '${self.public_ip},' --private-key ${var.private_key} -T 300 install_nginx.yml" 
+    command = "ansible-playbook -u ec2-user -i '${self.public_ip},' --private-key ${var.private_key} -T 300 install_nginx.yml -e public_ip='${self.public_ip}'" 
   }
 }
 
