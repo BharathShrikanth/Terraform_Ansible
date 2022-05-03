@@ -26,14 +26,14 @@ resource "aws_security_group" "allow_tls" {
     protocol         = "tcp"
   } 
   
-  ingress {
-    description      = "TLS from VPC"
-    from_port        = 80
-    to_port          = 80
-    cidr_blocks      = ["0.0.0.0/0"]
-    protocol         = "tcp"
-
-  } 
+#  ingress {
+#    description      = "HTTP from VPC"
+#    from_port        = 80
+#    to_port          = 80
+#    cidr_blocks      = ["0.0.0.0/0"]
+#    protocol         = "tcp"
+#
+#  } 
   ingress {
     description      = "SSH"
     from_port        = 22
