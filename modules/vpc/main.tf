@@ -33,12 +33,23 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_route_table" "igw_route" {
   vpc_id = aws_vpc.testVPC.id
 
+#  route {
+#    cidr_block = "10.0.0.0/16"
+#    gateway_id = aws_internet_gateway.gw.id
+#  }
   route {
-    cidr_block = "10.0.0.0/16"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw.id
   }
-
   tags = {
     Name = "igw_route"
   }
 }
+
+
+resource "aws_main_route_table_association" "rt_association" {
+  vpc_id = aws_vpc.testVPC.id
+  route_table_id = aws_route_table.igw_route.id
+}
+
+
